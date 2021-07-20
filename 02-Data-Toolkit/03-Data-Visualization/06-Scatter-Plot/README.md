@@ -71,7 +71,7 @@ That way we will be able to:
 **Plotly install:**
 
 ```sh
-pip install plotly==4.7.1
+pip install plotly
 ```
 
 <img src="https://i.ibb.co/9y0JLbF/Screen-Shot-2019-10-15-at-16-34-09.png" width="760">
