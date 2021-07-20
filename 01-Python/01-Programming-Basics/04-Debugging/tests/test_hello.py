@@ -5,6 +5,7 @@ from hello import full_name
 
 class TestHello(unittest.TestCase):
     def test_happy_path(self):
+        #import ipdb; ipdb.set_trace()
         actual = full_name("george", "harrison")
         self.assertEqual(actual, "George Harrison")
 
