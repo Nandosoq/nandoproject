@@ -2,12 +2,16 @@
 
 import sys
 import datetime
-
+import requests
 from weather import search_city
-
+BASE_URI = "https://www.metaweather.com"
 
 def daily_forecast(woeid, year, month, day):
-    pass  # YOUR CODE HERE
+
+    response = requests.get(BASE_URI + '/api/location/' + str(woeid) + '/' + str(year) +
+    '/' + str(month) + '/' + str(day)).json()
+
+    return response
 
 def monthly_forecast(woeid, year, month):
     """ return a `list` of forecasts for the whole month """
