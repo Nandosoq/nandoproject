@@ -1,7 +1,7 @@
 # pylint: disable=C0103, missing-docstring
 
 def detailed_movies(db):
-    '''return the list of movies with their genres and director name'''
+
     query = 'SELECT m.title, m.genres, d.name from movies m JOIN directors d ON  d.id = m.director_id'
     db.execute(query)
     rows = db.fetchall()
