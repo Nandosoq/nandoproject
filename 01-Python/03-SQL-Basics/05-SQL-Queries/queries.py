@@ -2,14 +2,28 @@
 
 def detailed_movies(db):
 
-    query = 'SELECT m.title, m.genres, d.name from movies m JOIN directors d ON  d.id = m.director_id'
+    query = '''
+    SELECT m.title, m.genres, d.name
+    FROM movies m
+    JOIN directors d ON d.id = m.director_id
+    '''
     db.execute(query)
     rows = db.fetchall()
     return rows
 
 
 def late_released_movies(db):
-    query = 'SELECT m.title, CASE WHEN m.start_year>d.death_year THEN 1 ELSE 0 END AS death from movies m JOIN directors d ON d.id = m.director_id GROUP BY m.title HAVING death = 1 ORDER BY m.title ASC'
+    query = '''
+    SELECT m.title,
+    CASE WHEN m.start_year>d.death_year
+	THEN 1
+	ELSE 0 END AS death
+    FROM movies m
+    JOIN directors d ON d.id = m.director_id
+    GROUP BY m.title
+    HAVING death = 1
+    ORDER BY m.title ASC
+    '''
     db.execute(query)
     rows = db.fetchall()
     list_mov = []
@@ -30,7 +44,16 @@ def stats_on(db, genre_name):
     '''return a dict of stats for a given genre'''
 
 def top_five_directors_for(db, genre_name):
-    query = "SELECT d.name, count(d.name) as contar FROM directors d join movies m on d.id = m.director_id WHERE m.genres ='" + genre_name  + "' GROUP BY d.name ORDER BY contar DESC, d.name ASC LIMIT 5"
+
+    query = '''
+    SELECT d.name, count(d.name) as contar
+    FROM directors d
+    JOIN movies m on d.id = m.director_id
+    WHERE m.genres =''' + "'" + genre_name  + "'" + '''
+    GROUP BY d.name
+    ORDER BY contar DESC, d.name ASC LIMIT 5
+    '''
+
     db.execute(query)
     rows = db.fetchall()
     #list_5 = []
@@ -45,7 +68,15 @@ def movie_duration_buckets(db):
 
 
 def top_five_youngest_newly_directors(db):
-    query = "SELECT d.name, (m.start_year -  d.birth_year) as age FROM directors d join movies m on d.id = m.director_id WHERE AGE <>'' ORDER BY age ASC LIMIT 5"
+    query = '''
+     SELECT d.name, (m.start_year -  d.birth_year) as age
+     FROM directors d
+     join movies m on d.id = m.director_id
+     WHERE AGE <>''
+     ORDER BY age ASC LIMIT 5
+    '''
+
+
     db.execute(query)
     rows = db.fetchall()
     return rows
