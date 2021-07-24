@@ -41,7 +41,7 @@ def stats_on(db, genre_name):
         'avg_length': round(rows[2],2)
     }
     return result
-    '''return a dict of stats for a given genre'''
+    #'''return a dict of stats for a given genre'''
 
 def top_five_directors_for(db, genre_name):
 
@@ -60,10 +60,10 @@ def top_five_directors_for(db, genre_name):
     #for row in rows:
     #    list_5.append(row[1])
     return rows
-    '''return the top 5 of the directors with the most movies for a given genre'''
+    #return the top 5 of the directors with the most movies for a given genre
 
 def movie_duration_buckets(db):
-    '''return the movie counts grouped by bucket of 30 min duration'''
+    #return the movie counts grouped by bucket of 30 min duration'''
     pass  # YOUR CODE HERE
 
 
@@ -75,10 +75,7 @@ def top_five_youngest_newly_directors(db):
      WHERE AGE <>''
      ORDER BY age ASC LIMIT 5
     '''
-
-
     db.execute(query)
     rows = db.fetchall()
     return rows
-    '''return the top 5 youngest directors when they direct their first movie'''
-    #pass  # YOUR CODE HERE
+    #return the top 5 youngest directors when they direct their first movie'''
