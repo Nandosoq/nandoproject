@@ -14,9 +14,9 @@ def get_average_purchase(db):
     ORDER BY c.CustomerID
     )
     SELECT DISTINCT CustomerID ,
-    AVG(OrderedAmount) OVER(
+    ROUND(AVG(OrderedAmount) OVER(
     PARTITION BY CustomerID
-    ) AS AverageOrderedAmount
+    ),2) AS AverageOrderedAmount
     FROM AmountTable
     '''
     db.execute(query)
