@@ -16,10 +16,10 @@ def convert(amount, currency):
     """
 
     if RATES.get(str(amount[1] + currency) ,0):
-        fx = RATES.get(str(amount[1] + currency) ,0)
-    elif RATES.get(str(currency + amount[1]) ,0):
-        fx = 1 / RATES.get(str(currency + amount[1]) ,0)
-    else:
-        return None
+        return round(RATES.get(str(amount[1] + currency) ,0) * amount[0])
+    #elif RATES.get(str(currency + amount[1]) ,0):
+    #    return round(1 / (RATES.get(str(currency + amount[1]), 0) * amount[0]))
+    #else:
+    return None
 
-    return round(fx*amount[0])
+    #return round(fx*amount[0])
