@@ -53,6 +53,21 @@ class Olist:
         01-01 > This function returns a matching table between
         columns [ "order_id", "review_id", "customer_id", "product_id", "seller_id"]
         """
+        data = Olist().get_data()
+
+        df_a = data['orders'][['order_id','customer_id']]
+        df_b = data['order_reviews'][['order_id','review_id']]
+        df_c = data['order_items'][['order_id','product_id','seller_id']]
+
+        h = df_a.merge(df_b, on='order_id', how='outer')
+        i = h.merge(df_c, on='order_id', how='outer')
+
+        return i
+
+
+
+
+
 
     def ping(self):
         """
