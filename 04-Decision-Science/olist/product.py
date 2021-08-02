@@ -49,7 +49,7 @@ class Product:
     def get_sales(self):
         """
         Returns a DataFrame with:
-        'seller_id', 'sales'
+        'product_id', 'sales'
         """
 
     def get_training_data(self):

@@ -1,6 +1,3 @@
-```bash
-jupyter notebook seller_pnl_recap.ipynb
-```
 ## SELLER P&L ANALYSIS
 
 The goal of this exercise is to compute, for each `seller_id`:

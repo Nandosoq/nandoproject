@@ -30,3 +30,22 @@ The mode of a set of data values is the value that appears most often. In other 
 Read this [wikipedia article](https://en.wikipedia.org/wiki/Mode_(statistics)) to see how the **mode** is computed.
 
 Implement in the file `basic_functions.py` the function `my_mode(samples)`.
+
+## The Modes (Optional)
+
+Sometimes, a set of data values can have more than one mode.
+
+E.g. A distribution of grades
+
+![grades_distribution](https://raw.githubusercontent.com/lewagon/data-images/master/math/grades.png)
+
+Implement the function `my_multimodes(samples)` in the `basic_functions.py`
+
+You can try it with:
+
+```python
+grades = [8,7,9,9,9,7,10,8,8,6,9,7,4,8,10,6,10,3,5,6,6,8,9,3,6,8,10,5,9,9,8,8,4,8,8,7,7,8,3,7,7,6,7,5,10,8,7,6,9,6,6,8,8,9,9,8,8,10,8,4,8,10,7,8,5,5,8,7,3,8,4,7,4,5,7,9,8,9,7,7,4,7,5,8,6,6,8,6,6,5,6,9,10,6,10,8,6,7,6,5,9,8,5,2,7,9,7,6,9,1,6,7,6,7,7,10,7,5,6,8,6,9,0,9,7,7,7,7,8,8,6,9,7,8,5,2,9,7,6,7,6,5,4]
+
+my_multimodes(samples)
+#=> [7, 8]
+```

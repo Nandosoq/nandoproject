@@ -22,7 +22,7 @@ class Seller:
     def get_seller_delay_wait_time(self):
         """
         Returns a DataFrame with:
-       'seller_id', 'delay_to_carrier', 'seller_wait_time'
+       'seller_id', 'delay_to_carrier', 'wait_time'
         """
 
     def get_active_dates(self):
