@@ -23,11 +23,63 @@ class Order:
         """
         # Hint: Within this instance method, you have access to the instance of the class Order in the variable self, as well as all its attributes
 
+        from olist.data import Olist
+        olist=Olist()
+        data=olist.get_data()
+        matching_table = olist.get_matching_table()
+
+        orders = data['orders'].copy()
+
+        dates = [
+            'order_purchase_timestamp', 'order_approved_at',
+            'order_delivered_carrier_date', 'order_delivered_customer_date',
+            'order_estimated_delivery_date'
+        ]
+
+        for dat in dates:
+            orders[dat] = pd.to_datetime(orders[dat])
+
+        orders['wait_time'] = orders['order_delivered_customer_date'].map(pd.Timestamp.to_julian_date) \
+            - orders['order_approved_at'].map(pd.Timestamp.to_julian_date)
+
+        orders['expected_wait_time'] = orders['order_estimated_delivery_date'].map(pd.Timestamp.to_julian_date) \
+            - orders['order_approved_at'].map(pd.Timestamp.to_julian_date) \
+
+        orders['delay_vs_expected'] = orders['order_delivered_customer_date'].map(pd.Timestamp.to_julian_date) \
+            - orders['order_estimated_delivery_date'].map(pd.Timestamp.to_julian_date)
+
+        orders['delay_vs_expected'] = np.where(orders['delay_vs_expected'] < 0, 0, orders['delay_vs_expected'])
+
+        return orders
+
     def get_review_score(self):
         """
         02-01 > Returns a DataFrame with:
         order_id, dim_is_five_star, dim_is_one_star, review_score
         """
+        from olist.data import Olist
+        olist=Olist()
+        data=olist.get_data()
+
+        reviews = data['order_reviews'].copy()
+
+        def dim_five_star(d):
+
+            if d == 5:
+                return 1
+            else:
+                return 0
+
+        def dim_one_star(d):
+            if d == 1:
+                return 1
+            else:
+                return 0
+
+        reviews["dim_is_five_star"] = reviews["review_score"].map(dim_five_star) # --> Series([0, 1, 1, 0, 0, 1 ...])
+        reviews["dim_is_one_star"] = reviews["review_score"].map(dim_one_star) # --> Series([0, 1, 1, 0, 0, 1 ...])
+
+        return reviews[['order_id', 'dim_is_five_star', 'dim_is_one_star', 'review_score']]
 
     def get_number_products(self):
         """
