@@ -87,17 +87,42 @@ class Order:
         order_id, number_of_products
         """
 
+        from olist.data import Olist
+        olist=Olist()
+        data=olist.get_data()
+        df = data['order_items'][['order_id', 'order_item_id']].groupby('order_id').sum()
+
+        df.rename(columns={'order_item_id': 'number_of_products'},
+                           inplace=True)
+        return df
+
+
     def get_number_sellers(self):
         """
         02-01 > Returns a DataFrame with:
         order_id, number_of_sellers
         """
+        from olist.data import Olist
+        olist = Olist()
+        data = olist.get_data()
+
+        df=data['order_items'][['order_id', 'seller_id']].groupby('order_id').nunique()
+
+        df.rename(columns={'seller_id': 'number_of_sellers'},
+                           inplace=True)
+        return df
 
     def get_price_and_freight(self):
         """
         02-01 > Returns a DataFrame with:
         order_id, price, freight_value
         """
+        from olist.data import Olist
+        olist = Olist()
+        data = olist.get_data()
+
+        return data['order_items'][['order_id', 'price', 'freight_value'
+                                    ]].groupby('order_id').sum()
 
     def get_distance_seller_customer(self):
         """
