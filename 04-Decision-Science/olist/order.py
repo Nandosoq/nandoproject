@@ -21,14 +21,19 @@ class Order:
         [order_id, wait_time, expected_wait_time, delay_vs_expected, order_status]
         and filtering out non-delivered orders unless specified
         """
-        # Hint: Within this instance method, you have access to the instance of the class Order in the variable self, as well as all its attributes
+        # Hint: Within this instance method, you have access to the instance of
+        # the class Order in the variable self, as well as all its attributes
 
         from olist.data import Olist
-        olist=Olist()
-        data=olist.get_data()
-        matching_table = olist.get_matching_table()
-
+        olist = Olist()
+        data = olist.get_data()
         orders = data['orders'].copy()
+
+        if is_delivered == True:
+
+            orders = orders[orders['order_status'] == 'delivered']
+
+            #data['orders'].copy()
 
         dates = [
             'order_purchase_timestamp', 'order_approved_at',
@@ -40,17 +45,21 @@ class Order:
             orders[dat] = pd.to_datetime(orders[dat])
 
         orders['wait_time'] = orders['order_delivered_customer_date'].map(pd.Timestamp.to_julian_date) \
-            - orders['order_approved_at'].map(pd.Timestamp.to_julian_date)
+            - orders['order_purchase_timestamp'].map(pd.Timestamp.to_julian_date)
 
         orders['expected_wait_time'] = orders['order_estimated_delivery_date'].map(pd.Timestamp.to_julian_date) \
-            - orders['order_approved_at'].map(pd.Timestamp.to_julian_date) \
+            - orders['order_purchase_timestamp'].map(pd.Timestamp.to_julian_date) \
 
         orders['delay_vs_expected'] = orders['order_delivered_customer_date'].map(pd.Timestamp.to_julian_date) \
             - orders['order_estimated_delivery_date'].map(pd.Timestamp.to_julian_date)
 
-        orders['delay_vs_expected'] = np.where(orders['delay_vs_expected'] < 0, 0, orders['delay_vs_expected'])
-
-        return orders
+        orders['delay_vs_expected'] = np.where(orders['delay_vs_expected'] < 0,
+                                               0, orders['delay_vs_expected'])
+        #print(orders.shape)
+        return orders[[
+            'order_id', 'wait_time', 'expected_wait_time', 'delay_vs_expected',
+            'order_status'
+        ]]
 
     def get_review_score(self):
         """
@@ -90,6 +99,7 @@ class Order:
         from olist.data import Olist
         olist=Olist()
         data=olist.get_data()
+
         df = data['order_items'][['order_id', 'order_item_id']].groupby('order_id').sum()
 
         df.rename(columns={'order_item_id': 'number_of_products'},
@@ -141,3 +151,21 @@ class Order:
         number_of_sellers, price, freight_value, distance_customer_seller]
         """
         # Hint: make sure to re-use your instance methods defined above
+
+        from olist.order import Order
+
+        gwt_df = Order().get_wait_time()
+        grs_df = Order().get_review_score()
+        final_df = gwt_df.merge(grs_df, on ='order_id')
+
+        gnp_df = Order().get_number_products()
+        final_df = final_df.merge(gnp_df, on ='order_id')
+
+        gns_df = Order().get_number_sellers()
+        final_df = final_df.merge(gns_df, on ='order_id')
+
+        gpf_df = Order().get_price_and_freight()
+        final_df = final_df.merge(gpf_df, on='order_id')
+
+
+        return final_df.dropna()
