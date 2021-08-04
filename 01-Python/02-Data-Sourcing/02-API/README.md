@@ -137,8 +137,8 @@ Open the `weather.py` file. You will be greeted by three empty functions:
 
 You need to implement them **in that order**. `make` will assist you for the first two functions, and for the last one you will need to run the Python program directly with `python weather.py`.
 
-1. Start with the `search_city` function which should return a dictionary with all the information about the city. Not just `woeid`!
-2. Continue to `weather_forecast` which takes the city `woeid` as an argument and returns the forecast for five days.
+1. Start with the `search_city` function which should return a `dictionary` with all the information about the city. Not just `woeid`!
+2. Continue to `weather_forecast` which takes the city `woeid` as an argument and returns the forecast for five days (make sure that the method returns a `list`).
 3. Finish off by coding the `main` function. It will be called when you run the `weather.py` file from the terminal. Which functions should be called from within `main`? In what order?
 
 💡 By the way, did you check the content of the `Makefile`? It runs `pylint` for every Python file in your project, and `pytest` for the whole project. You can only launch the tests for the weather CLI with:
