@@ -1,9 +1,9 @@
 
 ## Objective
 
-Setup a recurring production job using **Cloud Schedule** and **Cloud Functions**.
+Setup a recurring production job using **Cloud Scheduler** and **Cloud Functions**.
 
-**Cloud Schedule** will regularly trigger the execution of the job.
+**Cloud Scheduler** will regularly trigger the execution of the job.
 
 **Cloud Functions** will run the job.
 
